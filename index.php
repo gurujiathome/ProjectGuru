@@ -12,6 +12,10 @@ include("auth.php"); //include auth.php file on all secure pages ?>
 <p>Welcome <?php echo $_SESSION['username']; ?>!</p>
 <p>This is secure area.</p>
 <p><a href="dashboard.php">Dashboard</a></p>
+<p>This Promo Code is used  times  <?php
+ $text=$_POST['username'];
+ echo $text;
+?></p>
 <a href="logout.php">Logout</a>
 
 

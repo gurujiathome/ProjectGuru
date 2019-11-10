@@ -19,10 +19,14 @@
 		
 	//Checking is user existing in the database or not
         $query = "SELECT * FROM `usersdata` WHERE username='$username' and password='".md5($password)."'";
+		$query1 = "SELECT COUNT(*) FROM `usersdata` WHERE promo_code='Dnyanesh'";
+		
 		$result = mysqli_query($con,$query) or die(mysql_error());
+		$result1 = mysqli_query($con,$query1) or die(mysql_error());
 		$rows = mysqli_num_rows($result);
         if($rows==1){
 			$_SESSION['username'] = $username;
+			$_SESSION['promocode']=$promo_code;
 			header("Location: index.html"); // Redirect user to index.php
             }else{
 				echo "<div class='form'><h3>Username/password is incorrect. try again.</h3><br/>Click here to <a href='login.php'>Login</a></div>";
