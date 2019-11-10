@@ -1,0 +1,117 @@
+# create Database of name myguru_data
+# Create Table Locations 
+        
+                CREATE TABLE locations 
+                        (id INTEGER PRIMARY KEY,
+                        location VARCHAR(255))
+======================================================================================						
+   
+# Create Table tutors 
+
+     
+                CREATE TABLE tutors 
+                        (id INTEGER PRIMARY KEY,
+                        location_id INTEGER,
+                        school_id INTEGER,
+                        profile_pic VARCHAR(255),
+                        f_name VARCHAR(255),
+                        l_name VARCHAR(255),
+                        email VARCHAR(255),
+                        password VARCHAR(255),
+                        rating INTEGER,
+                        rating_count INTEGER,
+                        rate INTEGER,
+                        revenue INTEGER,
+                        FOREIGN KEY(school_id) REFERENCES schools(id),
+                        FOREIGN KEY(location_id) REFERENCES locations(id))
+=======================================================================================						
+# Create Table students
+
+        
+                CREATE TABLE students 
+                        (id INTEGER PRIMARY KEY,
+                        school_id INTEGER,
+                        audio_recording_id INTEGER,
+                        profile_pic VARCHAR(255),
+                        f_name VARCHAR(255),
+                        l_name VARCHAR(255),
+                        email VARCHAR(255),
+                        password VARCHAR(255),
+                        credit_card_num VARCHAR(255),
+                        credit_card_exp_date DATE,
+                        credit_card_cvv INTEGER,
+                        FOREIGN KEY(school_id) REFERENCES schools(id),
+                        FOREIGN KEY(audio_recording_id) REFERENCES audio_recording(id))
+===================================================================================================						
+# Create Table tutoring_sessions
+
+                CREATE TABLE tutoring_sessions 
+                        (id INTEGER PRIMARY KEY,
+                        title VARCHAR(255),
+                        start_time DATETIME,
+                        end_time DATETIME,
+                        student_id INTEGER,
+                        tutor_id INTEGER,
+                        location_id INTEGER,
+                        session_booked INTEGER,
+                        profile_pic VARCHAR(255),
+                        FOREIGN KEY(location_id) REFERENCES locations(id),
+                        FOREIGN KEY(student_id) REFERENCES students(id) ON DELETE CASCADE,
+                        FOREIGN KEY(tutor_id) REFERENCES tutors(id) ON DELETE CASCADE)
+						
+=========================================================================================================
+# Create Tabletutor_ratings
+
+                CREATE TABLE tutor_ratings 
+                        (id INTEGER PRIMARY KEY,
+                        rating INTEGER,
+                        student_id INTEGER,
+                        tutor_id INTEGER,
+                        FOREIGN KEY(student_id) REFERENCES students(id) ON DELETE CASCADE,
+                        FOREIGN KEY(tutor_id) REFERENCES tutors(id) ON DELETE CASCADE)
+						
+===========================================================================================================						
+# Create Table schools
+
+                CREATE TABLE schools 
+                        (id INTEGER PRIMARY KEY,
+                        name VARCHAR(255),
+                        type VARCHAR(255),
+                        location_id INTEGER,
+                        FOREIGN KEY(location_id) REFERENCES locations(id))
+						
+===============================================================================================						
+# Create Table courses
+
+                CREATE TABLE courses 
+                        (id INTEGER PRIMARY KEY,
+                        title VARCHAR(255),
+                        course_code VARCHAR(255))
+       
+================================================================================================	   
+# Create Table audio recording	   
+	   
+                CREATE TABLE audio_recording 
+                        (id INTEGER PRIMARY KEY,
+                        student_id INTEGER,
+                        session_id INTEGER,
+                        FOREIGN KEY(session_id) REFERENCES tutoring_sessions(id),
+                        FOREIGN KEY(student_id) REFERENCES students(id) ON DELETE CASCADE)
+===================================================================================================
+# Create Table course_tutors
+                CREATE TABLE course_tutors 
+                        (id INTEGER PRIMARY KEY,
+                        course_id INTEGER NOT NULL,
+                        tutor_id INTEGER NOT NULL,
+                        FOREIGN KEY(course_id) REFERENCES courses(id) ON DELETE CASCADE,
+                        FOREIGN KEY(tutor_id) REFERENCES tutors(id) ON DELETE CASCADE)
+=====================================================================================================
+# Create Table available_time
+                CREATE TABLE available_time 
+                        (id INTEGER PRIMARY KEY,
+                        tutor_id INTEGER NOT NULL,
+                        start_time DATETIME NOT NULL,
+                        end_time DATETIME NOT NULL,
+                        booked INTEGER,
+                        FOREIGN KEY(tutor_id) REFERENCES tutors(id) ON DELETE CASCADE)
+========================================================================================================        
